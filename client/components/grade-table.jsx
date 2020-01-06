@@ -4,9 +4,9 @@ import Grade from './grade';
 function TableHeading(props) {
   return (
     <div className="row border-bottom border-dark bg-secondary">
-      <div className="col h3 mb-0 border-right border-dark">Student Name</div>
-      <div className="col h3 mb-0 border-right border-dark">Course</div>
-      <div className="col h3 mb-0">Grade</div>
+      <div className="col h3 mb-0 border-right border-dark text-white">Student Name</div>
+      <div className="col h3 mb-0 border-right border-dark text-white">Course</div>
+      <div className="col h3 mb-0 text-white">Grade</div>
     </div>
   );
 }
