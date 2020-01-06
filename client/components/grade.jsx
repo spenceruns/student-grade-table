@@ -5,8 +5,8 @@ function Grade(props) {
   return (
     <div className="container">
       <div className={bgColor}>
-        <div className="col border-right border-dark">{props.grade.name}</div>
-        <div className="col border-right border-dark">{props.grade.course}</div>
+        <div className="col border-right">{props.grade.name}</div>
+        <div className="col border-right">{props.grade.course}</div>
         <div className="col">{props.grade.grade}</div>
       </div>
     </div>

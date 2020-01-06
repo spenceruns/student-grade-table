@@ -3,10 +3,10 @@ import Grade from './grade';
 
 function TableHeading(props) {
   return (
-    <div className="row border-bottom border-dark bg-secondary">
-      <div className="col h3 mb-0 border-right border-dark text-white">Student Name</div>
-      <div className="col h3 mb-0 border-right border-dark text-white">Course</div>
-      <div className="col h3 mb-0 text-white">Grade</div>
+    <div className="row m-0 border-bottom bg-secondary">
+      <h3 className="col mb-0 border-right text-white">Student Name</h3>
+      <h3 className="col mb-0 border-right text-white">Course</h3>
+      <h3 className="col mb-0 text-white">Grade</h3>
     </div>
   );
 }
@@ -22,37 +22,20 @@ function EmptyTable() {
 function FilledTable(props) {
   return props.grades.map(grade => {
     return (
-      <div key={props.grades.id} className="row" >
-        <Grade grade={grade} />
-      </div >
+      <Grade key={grade.id} grade={grade} />
     );
   });
 }
 
-class GradeTable extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isEmpty: true
-    };
-  }
+function GradeTable(props) {
+  const status = (props.grades.length > 0) ? <FilledTable grades={props.grades} /> : <EmptyTable />;
 
-  componentDidMount() {
-    if (this.props.grades) {
-      this.setState({ isEmpty: false });
-    }
-  }
-
-  render() {
-    const status = (this.state.isEmpty) ? <EmptyTable /> : <FilledTable grades={this.props.grades}/>;
-
-    return (
-      <div className="container border border-dark">
-        <TableHeading />
-        { status }
-      </div>
-    );
-  }
+  return (
+    <div className="container border px-0">
+      <TableHeading />
+      {status}
+    </div>
+  );
 }
 
 export default GradeTable;
