@@ -4,7 +4,7 @@ import Grade from './grade';
 function EmptyTable() {
   return (
     <tr>
-      <td>No Students Entered</td>
+      <td colSpan='4' className='h2 text-center'>No Students Entered</td>
     </tr>
   );
 }
@@ -12,13 +12,13 @@ function EmptyTable() {
 function FilledTable(props) {
   return props.grades.map(grade => {
     return (
-      <Grade key={grade.id} grade={grade} />
+      <Grade deleteStudent={props.deleteStudent} key={grade.id} grade={grade} />
     );
   });
 }
 
 function GradeTable(props) {
-  const status = (props.grades.length > 0) ? <FilledTable grades={props.grades} /> : <EmptyTable />;
+  const status = (props.grades.length > 0) ? <FilledTable deleteStudent={props.deleteStudent} grades={props.grades} /> : <EmptyTable />;
 
   return (
     <table className="table table-bordered table-striped">
@@ -27,6 +27,7 @@ function GradeTable(props) {
           <th className="h5">Student Name</th>
           <th className="h5">Course</th>
           <th className="h5">Grade</th>
+          <th className="h5">Operations</th>
         </tr>
       </thead>
       <tbody>
