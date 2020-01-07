@@ -60,14 +60,14 @@ class App extends React.Component {
     const average = (this.state.grades.length > 0) ? this.getAverageGrade() : 0;
     return (
       <div className="container">
-        <div className="row">
+        <div className="row border-bottom">
           <Header averageGrade={average} />
         </div>
         <div className="row">
-          <div className="col-8">
+          <div className="col-lg-8 mt-3">
             <GradeTable deleteStudent={this.deleteStudent} grades={this.state.grades} />
           </div>
-          <div className="col-4">
+          <div className="col-lg-4 mt-2">
             <GradeForm addStudent={this.addStudent} />
           </div>
         </div>
