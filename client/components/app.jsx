@@ -10,6 +10,7 @@ class App extends React.Component {
       grades: []
     };
     this.addStudent = this.addStudent.bind(this);
+    this.deleteStudent = this.deleteStudent.bind(this);
   }
 
   componentDidMount() {
@@ -35,6 +36,19 @@ class App extends React.Component {
       });
   }
 
+  deleteStudent(id) {
+    fetch(`/api/grades/${id}`, {
+      method: 'DELETE'
+    });
+    const newList = [...this.state.grades];
+    newList.forEach(student => {
+      if (student.id === id) {
+        newList.splice(newList.indexOf(student), 1);
+      }
+    });
+    this.setState({ grades: newList });
+  }
+
   getAverageGrade() {
     let total = 0;
     let amountOfStudents = 0;
@@ -54,7 +68,7 @@ class App extends React.Component {
         </div>
         <div className="row">
           <div className="col-8">
-            <GradeTable grades={this.state.grades} />
+            <GradeTable deleteStudent={this.deleteStudent} grades={this.state.grades} />
           </div>
           <div className="col-4">
             <GradeForm addStudent={this.addStudent} />
