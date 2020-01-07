@@ -2,12 +2,14 @@ import React from 'react';
 
 function Header(props) {
   return (
-    <div className="container">
-      <div className="row d-flex justify-content-between">
-        <h1 className="mt-4">Student Grade Table</h1>
-        <h2 className="mt-4">Average Grade<span className="badge badge-secondary">{props.averageGrade}</span></h2>
+    <>
+      <div className="col-6">
+        <div className="h2 mt-4">Student Grade Table</div>
       </div>
-    </div>
+      <div className="col-6">
+        <div className="h4 mt-4 text-right">Average Grade<span className="ml-2 mb-1 align-middle badge badge-secondary">{props.averageGrade}</span></div>
+      </div>
+    </>
   );
 }
 

@@ -1,21 +1,11 @@
 import React from 'react';
 import Grade from './grade';
 
-function TableHeading(props) {
-  return (
-    <div className="row m-0 border-bottom bg-secondary">
-      <h3 className="col mb-0 border-right text-white">Student Name</h3>
-      <h3 className="col mb-0 border-right text-white">Course</h3>
-      <h3 className="col mb-0 text-white">Grade</h3>
-    </div>
-  );
-}
-
 function EmptyTable() {
   return (
-    <div className="row">
-      <h1 className="mx-auto my-3">No Students Entered</h1>
-    </div>
+    <tr>
+      <td>No Students Entered</td>
+    </tr>
   );
 }
 
@@ -31,11 +21,21 @@ function GradeTable(props) {
   const status = (props.grades.length > 0) ? <FilledTable grades={props.grades} /> : <EmptyTable />;
 
   return (
-    <div className="container border px-0">
-      <TableHeading />
-      {status}
-    </div>
+    <table className="table table-bordered table-striped">
+      <thead className="thead-dark">
+        <tr>
+          <th className="h5">Student Name</th>
+          <th className="h5">Course</th>
+          <th className="h5">Grade</th>
+        </tr>
+      </thead>
+      <tbody>
+        {status}
+      </tbody>
+    </table>
   );
 }
 
 export default GradeTable;
+
+// h2 pr-5 py-2 text-white bg-secondary border-right
