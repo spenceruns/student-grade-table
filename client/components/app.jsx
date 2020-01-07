@@ -37,11 +37,13 @@ class App extends React.Component {
   }
 
   deleteStudent(id) {
-    const newList = this.state.grades.filter(student => student.id !== id);
-    this.setState({ grades: newList });
     fetch(`/api/grades/${id}`, {
       method: 'DELETE'
-    });
+    })
+      .then(() => {
+        const newList = this.state.grades.filter(student => student.id !== id);
+        this.setState({ grades: newList });
+      });
   }
 
   getAverageGrade() {
