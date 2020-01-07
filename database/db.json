@@ -2,15 +2,9 @@
   "grades": [
     {
       "name": "Spencer",
-      "course": "Test",
-      "grade": 100,
+      "course": "Testing",
+      "grade": 3,
       "id": 1
-    },
-    {
-      "name": "Tim",
-      "course": "Teaching",
-      "grade": 100,
-      "id": 2
     }
   ]
 }
