@@ -2,7 +2,7 @@
   "grades": [
     {
       "name": "Spencer",
-      "course": "Running",
+      "course": "Testing",
       "grade": 100,
       "id": 1
     }

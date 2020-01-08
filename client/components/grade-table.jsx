@@ -12,28 +12,30 @@ function EmptyTable() {
 function FilledTable(props) {
   return props.grades.map(grade => {
     return (
-      <Grade deleteStudent={props.deleteStudent} key={grade.id} grade={grade} />
+      <Grade updateStudent={props.updateStudent} deleteStudent={props.deleteStudent} key={grade.id} grade={grade} />
     );
   });
 }
 
 function GradeTable(props) {
-  const status = (props.grades.length > 0) ? <FilledTable deleteStudent={props.deleteStudent} grades={props.grades} /> : <EmptyTable />;
+  const status = (props.grades.length > 0) ? <FilledTable updateStudent={props.updateStudent} deleteStudent={props.deleteStudent} grades={props.grades} /> : <EmptyTable />;
 
   return (
-    <table className="table table-bordered table-striped">
-      <thead className="thead-dark">
-        <tr>
-          <th>Student Name</th>
-          <th>Course</th>
-          <th>Grade</th>
-          <th>Operations</th>
-        </tr>
-      </thead>
-      <tbody>
-        {status}
-      </tbody>
-    </table>
+    <div className="container-fluid">
+      <table className="table table-bordered table-striped">
+        <thead className="thead-dark">
+          <tr className="d-flex text-center">
+            <th className="col-3">Student Name</th>
+            <th className="col-3">Course</th>
+            <th className="col-3">Grade</th>
+            <th className="col-3">Operations</th>
+          </tr>
+        </thead>
+        <tbody>
+          {status}
+        </tbody>
+      </table>
+    </div>
   );
 }
 
