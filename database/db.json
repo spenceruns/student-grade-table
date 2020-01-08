@@ -5,6 +5,12 @@
       "course": "Testing",
       "grade": 100,
       "id": 1
+    },
+    {
+      "name": "Tim",
+      "course": "Coding",
+      "grade": 75,
+      "id": 2
     }
   ]
 }

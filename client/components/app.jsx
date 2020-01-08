@@ -48,7 +48,7 @@ class App extends React.Component {
       .then(res => res.json())
       .then(data => {
         const newList = [...this.state.grades];
-        const index = newList.findIndex(() => data.id === id);
+        const index = newList.findIndex(student => student.id === id);
         newList[index] = data;
         this.setState({ grades: newList });
       });
