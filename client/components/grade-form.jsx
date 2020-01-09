@@ -60,9 +60,9 @@ class GradeForm extends React.Component {
           <div className="input-group-text"><i className="fa fa-pencil-alt"></i></div>
           <input onChange={this.handleGradeChange} className="form-control" type="text" value={this.state.grade} placeholder="Grade" />
         </div>
-        <div className="btn-group my-2 float-right">
-          <button onClick={this.handleSubmit} className="btn-success">Add</button>
-          <button onClick={this.handleReset} className="btn-secondary">Cancel</button>
+        <div className="btn-group-sm my-2 float-right">
+          <button onClick={this.handleSubmit} className="btn btn-success">Add</button>
+          <button onClick={this.handleReset} className="btn btn-secondary">Cancel</button>
         </div>
       </form>
     );
@@ -70,3 +70,8 @@ class GradeForm extends React.Component {
 }
 
 export default GradeForm;
+
+// { /* <>
+//   <i className="btn btn-success fa fa-plus"></i>
+//   <AddStudent input={this.state} handleNameChange={this.handleNameChange} handleCourseChange={this.handleCourseChange} handleGradeChange={this.handleGradeChange} handleReset={this.handleReset} handleSubmit={this.handleSubmit} />
+// </> */ }

@@ -10,6 +10,7 @@ class App extends React.Component {
       grades: []
     };
     this.addStudent = this.addStudent.bind(this);
+    this.updateStudent = this.updateStudent.bind(this);
     this.deleteStudent = this.deleteStudent.bind(this);
   }
 
@@ -32,6 +33,23 @@ class App extends React.Component {
       .then(data => {
         const newList = [...this.state.grades];
         newList.push(data);
+        this.setState({ grades: newList });
+      });
+  }
+
+  updateStudent(id, studentInfo) {
+    fetch(`/api/grades/${id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(studentInfo)
+    })
+      .then(res => res.json())
+      .then(data => {
+        const newList = [...this.state.grades];
+        const index = newList.findIndex(student => student.id === id);
+        newList[index] = data;
         this.setState({ grades: newList });
       });
   }
@@ -65,9 +83,9 @@ class App extends React.Component {
         </div>
         <div className="row">
           <div className="col-lg-8 mt-3">
-            <GradeTable deleteStudent={this.deleteStudent} grades={this.state.grades} />
+            <GradeTable updateStudent={this.updateStudent} deleteStudent={this.deleteStudent} grades={this.state.grades} />
           </div>
-          <div className="col-lg-4 mt-2">
+          <div className="col-lg-4 mt-3">
             <GradeForm addStudent={this.addStudent} />
           </div>
         </div>
