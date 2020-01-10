@@ -8,6 +8,13 @@ const db = new pg.Pool({
 
 app.use(express.json());
 
+class ApiError {
+  constructor(message, statusCode) {
+    this.message = message;
+    this.statusCode = statusCode;
+  }
+}
+
 app.get('/api/grades', (req, res, next) => {
   const sql = `
   select *
@@ -18,21 +25,13 @@ app.get('/api/grades', (req, res, next) => {
     .then(result => {
       const grades = result.rows;
       res.status(200).json(grades);
-    })
-    .catch(err => {
-      console.error(err);
-      res.status(500).json({
-        error: 'An unknown error occured. Please try again later.'
-      });
     });
 });
 
 app.post('/api/grades', (req, res, next) => {
   const message = checkForValidPostReq(req);
   if (message) {
-    res.status(400).json({
-      error: message
-    });
+    return next(new ApiError(message, 400));
   }
   const sql = `
   insert into "grades" ("name", "course", "grade")
@@ -42,13 +41,7 @@ app.post('/api/grades', (req, res, next) => {
   const studentToAdd = [req.body.name, req.body.course, parseInt(req.body.grade)];
   db.query(sql, studentToAdd)
     .then(result => {
-      res.status(200).json(result.rows);
-    })
-    .catch(err => {
-      console.error(err);
-      res.status(500).json({
-        error: 'An unknown error occured. Please try again later.'
-      });
+      res.status(200).json(result.rows[0]);
     });
 });
 
@@ -57,13 +50,9 @@ app.put('/api/grades/:gradeId', (req, res, next) => {
   const gradeIdMessage = checkForValidGradeId(gradeId);
   const gradeMessage = checkForValidGradeEntry(req);
   if (gradeIdMessage) {
-    return res.status(400).json({
-      error: gradeIdMessage
-    });
+    return next(new ApiError(gradeIdMessage, 400));
   } else if (gradeMessage) {
-    return res.status(400).json({
-      error: gradeMessage
-    });
+    return next(new ApiError(gradeMessage, 400));
   }
   const sql = `
   update "grades"
@@ -78,18 +67,10 @@ app.put('/api/grades/:gradeId', (req, res, next) => {
     .then(result => {
       const grade = result.rows[0];
       if (!grade) {
-        res.status(404).json({
-          error: `Cannot find student with grade ID ${gradeId}.`
-        });
+        return next(new ApiError(`Cannot find student with grade ID ${gradeId}.`, 404));
       } else {
         res.status(200).json(grade);
       }
-    })
-    .catch(err => {
-      console.error(err);
-      res.status(500).json({
-        error: 'An unknown error occured. Please try again later.'
-      });
     });
 });
 
@@ -97,9 +78,7 @@ app.delete('/api/grades/:gradeId', (req, res, next) => {
   const { gradeId } = req.params;
   const message = checkForValidGradeId(gradeId);
   if (message) {
-    return res.status(400).json({
-      error: message
-    });
+    return next(new ApiError(message, 400));
   }
   const sql = `
    delete from "grades"
@@ -111,19 +90,24 @@ app.delete('/api/grades/:gradeId', (req, res, next) => {
     .then(result => {
       const grade = result.rows[0];
       if (!grade) {
-        res.status(404).json({
-          error: `Cannot find student with grade ID ${gradeId}.`
-        });
+        return next(new ApiError(`Cannot find student with grade ID ${gradeId}.`, 404));
       } else {
         res.status(200).json(`Successfully deleted student with grade ID ${gradeId}.`);
       }
-    })
-    .catch(err => {
-      console.error(err);
-      res.status(500).json({
-        error: 'An unknown error occured. Please try again later.'
-      });
     });
+});
+
+app.use((err, req, res, next) => {
+  if (err instanceof ApiError) {
+    res.status(err.statusCode).json({
+      error: err.message
+    });
+  } else {
+    console.error(err);
+    res.status(500).json({
+      error: 'An unknown error occured. Please try again later.'
+    });
+  }
 });
 
 function checkForValidPostReq(req) {
@@ -144,6 +128,7 @@ function checkForValidGradeId(gradeId) {
   if (!parseInt(gradeId)) {
     return 'Grade ID must be a postiive integer.';
   }
+  return false;
 }
 
 function checkForValidGradeEntry(req) {

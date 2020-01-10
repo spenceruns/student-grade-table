@@ -36,7 +36,7 @@ class App extends React.Component {
       .then(res => res.json())
       .then(data => {
         const newList = [...this.state.grades];
-        newList.push(data[0]);
+        newList.push(data);
         this.setState({ grades: newList });
       });
   }
@@ -89,7 +89,7 @@ class App extends React.Component {
 
   render() {
     const average = (this.state.grades.length > 0) ? this.getAverageGrade() : 0;
-    const error = (this.state.error) ? <Alert error={this.state.error} /> : null;
+    const error = this.state.error && <Alert error={this.state.error} />;
     return (
       <div className="container">
         <div className="row border-bottom">
