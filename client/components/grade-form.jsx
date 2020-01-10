@@ -27,7 +27,12 @@ class GradeForm extends React.Component {
 
   handleGradeChange(event) {
     event.preventDefault();
-    this.setState({ grade: parseInt(event.target.value) });
+    const gradeValue = parseInt(event.target.value);
+    if (isNaN(gradeValue)) {
+      this.setState({ grade: '' });
+    } else {
+      this.setState({ grade: parseInt(event.target.value) });
+    }
   }
 
   handleReset() {
@@ -41,7 +46,11 @@ class GradeForm extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    this.props.addStudent(this.state);
+    if (!this.state.name || !this.state.course || !this.state.grade) {
+      this.props.handleError("Please enter a student's name, course and grade.");
+    } else {
+      this.props.addStudent(this.state);
+    }
     this.handleReset();
   }
 

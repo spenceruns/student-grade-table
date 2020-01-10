@@ -50,12 +50,21 @@ class EditStudent extends React.Component {
 
   handleGradeChange(event) {
     event.preventDefault();
-    this.setState({ grade: parseInt(event.target.value) });
+    const gradeValue = parseInt(event.target.value);
+    if (isNaN(gradeValue)) {
+      this.setState({ grade: '' });
+    } else {
+      this.setState({ grade: parseInt(event.target.value) });
+    }
   }
 
   updateStudent() {
-    this.props.updateStudent(this.props.grade.id, this.state);
-    this.props.submit();
+    if (!this.state.name || !this.state.course || !this.state.grade) {
+      this.props.handleError("Please enter a student's name, course and grade.");
+    } else {
+      this.props.updateStudent(this.props.grade.gradeId, this.state);
+      this.props.submit();
+    }
   }
 
   render() {
@@ -94,11 +103,11 @@ class Grade extends React.Component {
   }
 
   deleteStudent() {
-    this.props.deleteStudent(this.props.grade.id);
+    this.props.deleteStudent(this.props.grade.gradeId);
   }
 
   render() {
-    return this.state.editStudent ? <EditStudent updateStudent={this.props.updateStudent} submit={this.submitStudent} grade={this.props.grade} /> : <DisplayStudent grade={this.props.grade} edit={this.editStudent} delete={this.deleteStudent} />;
+    return this.state.editStudent ? <EditStudent updateStudent={this.props.updateStudent} handleError={this.props.handleError} submit={this.submitStudent} grade={this.props.grade} /> : <DisplayStudent grade={this.props.grade} edit={this.editStudent} delete={this.deleteStudent} />;
   }
 }
 
