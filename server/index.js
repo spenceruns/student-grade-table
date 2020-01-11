@@ -26,7 +26,7 @@ app.get('/api/grades', (req, res, next) => {
       const grades = result.rows;
       res.status(200).json(grades);
     })
-    .catch(err => console.error(err));
+    .catch(err => next(err));
 });
 
 app.post('/api/grades', (req, res, next) => {
@@ -44,7 +44,7 @@ app.post('/api/grades', (req, res, next) => {
     .then(result => {
       res.status(200).json(result.rows[0]);
     })
-    .catch(err => console.error(err));
+    .catch(err => next(err));
 });
 
 app.put('/api/grades/:gradeId', (req, res, next) => {
@@ -74,7 +74,7 @@ app.put('/api/grades/:gradeId', (req, res, next) => {
         res.status(200).json(grade);
       }
     })
-    .catch(err => console.error(err));
+    .catch(err => next(err));
 });
 
 app.delete('/api/grades/:gradeId', (req, res, next) => {
@@ -98,7 +98,7 @@ app.delete('/api/grades/:gradeId', (req, res, next) => {
         res.status(200).json(`Successfully deleted student with grade ID ${gradeId}.`);
       }
     })
-    .catch(err => console.error(err));
+    .catch(err => next(err));
 });
 
 app.use((err, req, res, next) => {
