@@ -12,13 +12,13 @@ function EmptyTable() {
 function FilledTable(props) {
   return props.grades.map(grade => {
     return (
-      <Grade updateStudent={props.updateStudent} deleteStudent={props.deleteStudent} key={grade.id} grade={grade} />
+      <Grade updateStudent={props.updateStudent} deleteStudent={props.deleteStudent} handleError={props.handleError} key={grade.gradeId} grade={grade} />
     );
   });
 }
 
 function GradeTable(props) {
-  const status = (props.grades.length > 0) ? <FilledTable updateStudent={props.updateStudent} deleteStudent={props.deleteStudent} grades={props.grades} /> : <EmptyTable />;
+  const status = (props.grades.length > 0) ? <FilledTable updateStudent={props.updateStudent} deleteStudent={props.deleteStudent} handleError={props.handleError} grades={props.grades} /> : <EmptyTable />;
 
   return (
     <div className="container-fluid">
