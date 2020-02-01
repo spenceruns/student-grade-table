@@ -79,8 +79,3 @@ class GradeForm extends React.Component {
 }
 
 export default GradeForm;
-
-// { /* <>
-//   <i className="btn btn-success fa fa-plus"></i>
-//   <AddStudent input={this.state} handleNameChange={this.handleNameChange} handleCourseChange={this.handleCourseChange} handleGradeChange={this.handleGradeChange} handleReset={this.handleReset} handleSubmit={this.handleSubmit} />
-// </> */ }
